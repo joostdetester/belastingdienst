@@ -26,9 +26,13 @@ steps:
   displayName: 'Run BDD Pytest'
 
 - script: |
-    nohup uvicorn app.main:app --host 127.0.0.1 --port 8000 &
-    sleep 5
-    robot --output results/output.xml --log results/log.html --report results/report.html --xunit results/robot-xunit.xml tests/robot
+  # Start the app on port 8001 (Robot tests expect 8001), detach output to avoid inherited STDIO
+  nohup uvicorn app.main:app --host 127.0.0.1 --port 8001 > uvicorn.log 2>&1 &
+  sleep 5
+  tail -n +1 uvicorn.log || true
+  robot --output results/output.xml --log results/log.html --report results/report.html --xunit results/robot-xunit.xml tests/robot
+  # Stop uvicorn to ensure no background processes remain
+  pkill -f "uvicorn app.main:app" || true
   displayName: 'Run Robot Framework tests'
 
 - task: PublishTestResults@2
