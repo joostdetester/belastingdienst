@@ -16,13 +16,13 @@ steps:
   displayName: 'Install dependencies'
 
 - script: |
-  mkdir -p results
-  python -m pytest --junitxml=results/pytest-junit.xml
+    mkdir -p results
+    python -m pytest --junitxml=results/pytest-junit.xml
   displayName: 'Run Pytest suite'
 
 - script: |
-  # Also run BDD pytest file separately and publish its JUnit XML
-  python -m pytest --junitxml=results/pytest-bdd-junit.xml tests/pytest/test_api_bdd.py
+    # Also run BDD pytest file separately and publish its JUnit XML
+    python -m pytest --junitxml=results/pytest-bdd-junit.xml tests/pytest/test_api_bdd.py
   displayName: 'Run BDD Pytest'
 
 - script: |
