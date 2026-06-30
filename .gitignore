@@ -1,3 +1,42 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environments
+.venv/
+venv/
+env/
+ENV/
+
+# VS Code
+.vscode/
+
+# Pytest
+.pytest_cache/
+tests/__pycache__/
+
+# Robot Framework results
+results/
+
+# Byte-compiled / coverage
+.mypy_cache/
+.coverage
+coverage.xml
+
+# Editor temp files
+*.swp
+*.swo
+*.tmp
+*.log
+.DS_Store
+
+# IDEs
+.idea/
+
+# Local env files
+.env
+env.local
 __pycache__/
 *.pyc
 .venv/
