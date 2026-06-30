@@ -1,4 +1,4 @@
-annual_income,deductible,expected_bracket
-28000,1000,LOW
-55000,5000,MID
-120000,10000,HIGH
+jaarinkomen,aftrek,verwachte_schijf
+28000,1000,SCHIJF_1
+55000,5000,SCHIJF_2
+120000,10000,SCHIJF_3
