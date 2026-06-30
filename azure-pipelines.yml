@@ -1,0 +1,51 @@
+trigger:
+- main
+
+pool:
+  vmImage: ubuntu-latest
+
+steps:
+- task: UsePythonVersion@0
+  inputs:
+    versionSpec: '3.11'
+  displayName: 'Use Python 3.11'
+
+- script: |
+    python -m pip install --upgrade pip
+    pip install -r requirements.txt
+  displayName: 'Install dependencies'
+
+- script: |
+  mkdir -p results
+  python -m pytest --junitxml=results/pytest-junit.xml
+  displayName: 'Run Pytest suite'
+
+- script: |
+  # Also run BDD pytest file separately and publish its JUnit XML
+  python -m pytest --junitxml=results/pytest-bdd-junit.xml tests/pytest/test_api_bdd.py
+  displayName: 'Run BDD Pytest'
+
+- script: |
+    nohup uvicorn app.main:app --host 127.0.0.1 --port 8000 &
+    sleep 5
+    robot --output results/output.xml --log results/log.html --report results/report.html --xunit results/robot-xunit.xml tests/robot
+  displayName: 'Run Robot Framework tests'
+
+- task: PublishTestResults@2
+  inputs:
+    testResultsFormat: 'JUnit'
+    testResultsFiles: |
+      results/pytest-junit.xml
+      results/pytest-bdd-junit.xml
+      results/robot-xunit.xml
+    failTaskOnFailedTests: true
+  condition: always()
+  displayName: 'Publish Pytest results'
+
+- task: PublishBuildArtifacts@1
+  inputs:
+    PathtoPublish: 'results'
+    ArtifactName: 'robot-results'
+    publishLocation: 'Container'
+  condition: always()
+  displayName: 'Publish Robot results'

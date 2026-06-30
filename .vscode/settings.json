@@ -1,0 +1,21 @@
+{
+    "cucumberautocomplete.steps": [
+        "tests/pytest/*.py"
+    ],
+    "cucumberautocomplete.syncfeatures": "tests/features/*.feature",
+    "cucumberautocomplete.strictGherkinCompletion": false,
+    "cucumberautocomplete.customParameters": [
+        {
+            "parameter": "{inkomen:d}",
+            "value": "\\d+"
+        },
+        {
+            "parameter": "{aftrek:d}",
+            "value": "\\d+"
+        },
+        {
+            "parameter": "{bedrag:f}",
+            "value": "[\\d.]+"
+        }
+    ]
+}

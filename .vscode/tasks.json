@@ -1,0 +1,113 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "Run Pytest",
+			"type": "process",
+			"command": "c:/Users/joost/Documents/Test automation/PycharmProjects/Belastingdienst/.venv/Scripts/python.exe",
+			"args": [
+				"-m",
+				"pytest",
+				"--junitxml=results/pytest-junit.xml"
+			],
+			"problemMatcher": [],
+			"group": "test"
+		},
+		{
+			"label": "Start API (Uvicorn)",
+			"type": "process",
+			"command": "c:/Users/joost/Documents/Test automation/PycharmProjects/Belastingdienst/.venv/Scripts/python.exe",
+			"args": [
+				"-m",
+				"uvicorn",
+				"app.main:app",
+				"--host",
+				"127.0.0.1",
+				"--port",
+				"8001"
+			],
+			"problemMatcher": []
+		},
+		{
+			"label": "Run Robot",
+			"type": "process",
+			"command": "c:/Users/joost/Documents/Test automation/PycharmProjects/Belastingdienst/.venv/Scripts/python.exe",
+			"args": [
+				"-m",
+				"robot",
+				"--output",
+				"results/output.xml",
+				"--log",
+				"results/log.html",
+				"--report",
+				"results/report.html",
+				"--xunit",
+				"results/robot-xunit.xml",
+				"tests/robot"
+			],
+			"problemMatcher": [],
+			"group": "test"
+		},
+		{
+			"label": "Run BDD Pytest",
+			"type": "process",
+			"command": "c:/Users/joost/Documents/Test automation/PycharmProjects/Belastingdienst/.venv/Scripts/python.exe",
+			"args": [
+				"-m",
+				"pytest",
+				"--junitxml=results/pytest-bdd-junit.xml",
+				"tests/pytest/test_api_bdd.py"
+			],
+			"problemMatcher": [],
+			"group": "test"
+		},
+		{
+			"label": "Run BDD Robot",
+			"type": "process",
+			"command": "c:/Users/joost/Documents/Test automation/PycharmProjects/Belastingdienst/.venv/Scripts/python.exe",
+			"args": [
+				"-m",
+				"robot",
+				"--output",
+				"results/output-bdd.xml",
+				"--log",
+				"results/log-bdd.html",
+				"--report",
+				"results/report-bdd.html",
+				"--xunit",
+				"results/robot-bdd-xunit.xml",
+				"tests/robot/api_tax_bdd.robot"
+			],
+			"problemMatcher": [],
+			"group": "test"
+		},
+		{
+			"label": "Run All BDD tests",
+			"type": "process",
+			"command": "powershell",
+			"args": [
+				"-NoProfile",
+				"-ExecutionPolicy",
+				"Bypass",
+				"-File",
+				"scripts/run_all_bdd.ps1"
+			],
+			"problemMatcher": [],
+			"group": "test"
+		},
+		{
+			"label": "Run All Tests",
+			"type": "process",
+			"command": "powershell",
+			"args": [
+				"-NoProfile",
+				"-ExecutionPolicy",
+				"Bypass",
+				"-File",
+				"scripts/run_all_tests.ps1"
+			],
+			"problemMatcher": [],
+			"group": "test"
+		}
+	]
+}
